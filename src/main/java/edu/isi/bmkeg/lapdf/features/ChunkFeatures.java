@@ -70,7 +70,6 @@ public class ChunkFeatures {
 		
 		int i = chunk.getMostPopularWordHeight();
 		int j = parent.getDocument().readMostPopularWordHeight();
-		
 		return (i-j);
 	}
 	
@@ -483,6 +482,21 @@ public class ChunkFeatures {
 			return false;
 		}
 		
+	}
+	
+	/**
+	 * returns the difference between the most popular font size in the in the current chunk 
+	 * and the most popular font size in the document.
+	 * @return
+	 */
+	public int getHeightDifferenceBetweenChunkWordAndTitleChuckWord(ChunkBlock titleChunk) {
+		if(titleChunk != null) {
+			int i = chunk.getMostPopularWordHeight();
+			int j = titleChunk.getMostPopularWordHeight();
+			
+			return (i-j);
+		}
+		return Integer.MAX_VALUE;
 	}
 
 }

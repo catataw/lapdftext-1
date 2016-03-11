@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import edu.isi.bmkeg.lapdf.controller.LapdfEngine;
 import edu.isi.bmkeg.lapdf.controller.LapdfEngineEx;
 import edu.isi.bmkeg.lapdf.model.LapdfDocument;
 import edu.isi.bmkeg.lapdf.xml.model.LapdftextXMLDocument;
@@ -23,8 +22,11 @@ public class BlockifyClassify {
 
 	public static void main(String args[]) throws Exception {
 
-		LapdfEngine engine = new LapdfEngine();
-		LapdfEngineEx a = new LapdfEngineEx();
+		//LapdfEngine engine = new LapdfEngine();
+		LapdfEngineEx engine = new LapdfEngineEx();
+		engine.setStartPage(28);
+		engine.setEndPage(28);
+		
 		if (args.length < 1) {
 			System.err.println(USAGE);
 			System.exit(1);

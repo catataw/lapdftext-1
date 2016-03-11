@@ -45,7 +45,7 @@ public class RuleBasedParser implements Parser {
 
 	private ArrayList<PageBlock> pageList;
 	
-	private JPedalExtractor pageExtractor;
+	protected JPedalExtractor pageExtractor;
 	//private PDFBoxExtractor pageExtractor;
 	
 	private int idGenerator;
@@ -88,8 +88,9 @@ public class RuleBasedParser implements Parser {
 			throws Exception {
 
 		pageList = new ArrayList<PageBlock>();
+		
 		pageExtractor = new JPedalExtractor(modelFactory);
-
+		
 		idGenerator = 1;
 		this.avgHeightFrequencyCounter = new IntegerFrequencyCounter(1);
 		this.fontFrequencyCounter = new FrequencyCounter();
@@ -146,7 +147,6 @@ public class RuleBasedParser implements Parser {
 					pageExtractor.getCurrentPageBoxWidth(),
 					pageExtractor.getCurrentPageBoxHeight(), 
 					document);
-			
 			pageList.add(pageBlock);
 			
 			

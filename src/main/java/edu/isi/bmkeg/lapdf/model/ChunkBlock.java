@@ -13,6 +13,7 @@ import edu.isi.bmkeg.lapdf.model.spatial.SpatialEntity;
 public interface ChunkBlock extends Block, SpatialEntity {
 
 	public static final String TYPE_TITLE = "title";
+	public static final String TYPE_HIGHLIGHT = "highlight";
 	public static final String TYPE_AUTHORS = "authors";
 	public static final String TYPE_BODY = "body";
 	public static final String TYPE_HEADING = "heading";

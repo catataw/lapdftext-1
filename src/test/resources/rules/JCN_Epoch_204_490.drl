@@ -20,7 +20,7 @@ no-loop
 		    ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>2)
 		  
 		    eval(chunk.getNumberOfLine()<=6)
-		    ChunkFeatures(allignedMiddle==true)
+		    ChunkFeatures(alignedMiddle==true)
 		    ChunkFeatures(mostPopularFontModifierBold==true)
 	then 
 		chunk.setType(chunk.TYPE_TITLE);
@@ -38,7 +38,7 @@ no-loop
 		    ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord<=2)
 		    ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=-2)
 		    eval(chunk.getNumberOfLine()<=4)
-		    ChunkFeatures(allignedMiddle==true)
+		    ChunkFeatures(alignedMiddle==true)
 		    ChunkFeatures(allCapitals==false)
 		    ChunkFeatures(mostPopularFontModifierBold==false)
 		    
@@ -72,7 +72,7 @@ no-loop
 		    ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord<=2)
 		    ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=0)
 		    eval(chunk.getNumberOfLine()==1)
-		    ChunkFeatures(allignedMiddle==true)
+		    ChunkFeatures(alignedMiddle==true)
 		    ChunkFeatures(allCapitals==true)
 		    features:ChunkFeatures()
 		    eval(features.isMatchingRegularExpression("^(Summ|[Aa]bst|SUMM|ABST)")==false)
@@ -90,7 +90,7 @@ salience 3
 			
 			
 		    eval(chunk.getNumberOfLine()==1)
-		    ChunkFeatures(allignedMiddle==true)
+		    ChunkFeatures(alignedMiddle==true)
 		    features:ChunkFeatures()
 		    eval(features.isMatchingRegularExpression("^(Summ|[Aa]bst|SUMM|ABST)")==true)
 	then
@@ -145,7 +145,7 @@ activation-group "blockClassification"
 salience 3
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=2)
-	    	 ChunkFeatures(allignedMiddle==false)
+	    	 ChunkFeatures(alignedMiddle==false)
 	    	
 	    	 features:ChunkFeatures()
 		    eval(features.isMatchingRegularExpression("^(Intr|INTR)")==true)
@@ -161,7 +161,7 @@ salience 1
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord<=2)
 	    	  ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=0)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	ChunkFeatures(allignedWithColumnBoundaries==true)
 	    	ChunkFeatures(chunkTextLength>25)
 	    	(ChunkFeatures(section=="introduction")  or ChunkFeatures(section=="keywords") or ChunkFeatures(section=="abstract"))
@@ -181,7 +181,7 @@ salience 2
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=1)
 	    	eval(chunk.getNumberOfLine()<=2)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	ChunkFeatures(columnCentered==true)
 	    	ChunkFeatures(section=="introduction")
 	    	
@@ -197,7 +197,7 @@ salience 3
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=2)
 	    	eval(chunk.getNumberOfLine()==1)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	features:ChunkFeatures()
 		    eval(features.isMatchingRegularExpression("^(MATE|METH|Mate|Meth)")==true)
 	then
@@ -211,7 +211,7 @@ salience 2
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=1)
 	    	eval(chunk.getNumberOfLine()<=2)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	
 	    	ChunkFeatures(columnCentered==true)
 	    	ChunkFeatures(section=="methods")
@@ -227,7 +227,7 @@ salience 1
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord<=2)
 	    	  ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=0)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	ChunkFeatures(allignedWithColumnBoundaries==true)
 	    	ChunkFeatures(chunkTextLength>10)
 	    	ChunkFeatures(section=="methods")
@@ -243,7 +243,7 @@ salience 3
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=2)
 	    	eval(chunk.getNumberOfLine()==1)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	features:ChunkFeatures()
 		    eval(features.isMatchingRegularExpression("^(Res|RES|OBS|Obs)")==true)
 	then
@@ -257,7 +257,7 @@ salience 1
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord<=2)
 	      ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=0)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	ChunkFeatures(allignedWithColumnBoundaries==true)
 	    	ChunkFeatures(chunkTextLength>10)
 	    	ChunkFeatures(section=="results")
@@ -272,7 +272,7 @@ salience 2
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=1)
 	    	eval(chunk.getNumberOfLine()<=2)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	
 	    	ChunkFeatures(columnCentered==true)
 	    	ChunkFeatures(section=="results")
@@ -287,7 +287,7 @@ activation-group "blockClassification"
 salience 3
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=2)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	features:ChunkFeatures()
 		    eval(features.isMatchingRegularExpression("^(Refe|REFE|Lite|LITE)")==true)
 	then
@@ -300,7 +300,7 @@ activation-group "blockClassification"
 salience 1	
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord<=-2)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	
 	    	ChunkFeatures(chunkTextLength>10)
 	    	ChunkFeatures(section=="references")
@@ -315,7 +315,7 @@ salience 3
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=2)
 	    	eval(chunk.getNumberOfLine()==1)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	features:ChunkFeatures()
 		    eval(features.isMatchingRegularExpression("^(Disc|DISC)")==true)
 	then
@@ -329,7 +329,7 @@ salience 1
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord<=2)
 	    	  ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=0)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	ChunkFeatures(allignedWithColumnBoundaries==true)
 	    	ChunkFeatures(chunkTextLength>10)
 	    	ChunkFeatures(section=="discussion")
@@ -344,7 +344,7 @@ salience 2
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=1)
 	    	eval(chunk.getNumberOfLine()<=2)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	ChunkFeatures(columnCentered==true)
 	    	ChunkFeatures(section=="discussion")
 	    	
@@ -359,7 +359,7 @@ salience 3
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=2)
 	    	eval(chunk.getNumberOfLine()==1)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	features:ChunkFeatures()
 		    eval(features.isMatchingRegularExpression("^(CONC|Conc)")==true)
 	then
@@ -373,7 +373,7 @@ salience 1
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord<=2)
 	      ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=0)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	ChunkFeatures(allignedWithColumnBoundaries==true)
 	    	ChunkFeatures(chunkTextLength>10)
 	    	ChunkFeatures(section=="conclusions")
@@ -388,7 +388,7 @@ salience 2
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=1)
 	    	eval(chunk.getNumberOfLine()<=2)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	ChunkFeatures(columnCentered==true)
 	    	ChunkFeatures(section=="conclusions")
 	    	
@@ -404,7 +404,7 @@ salience 3
 	when
 	    	
 	    	eval(chunk.getNumberOfLine()==1)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	features:ChunkFeatures()
 		    eval(features.isMatchingRegularExpression("^(ACKN|Ackn)")==true)
 	then
@@ -418,7 +418,7 @@ salience 1
 	when
 	    	ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord<=2)
 	    	  ChunkFeatures(heightDifferenceBetweenChunkWordAndDocumentWord>=0)
-	    	ChunkFeatures(allignedMiddle==false)
+	    	ChunkFeatures(alignedMiddle==false)
 	    	ChunkFeatures(allignedWithColumnBoundaries==true)
 	    	ChunkFeatures(chunkTextLength>10)
 	    	ChunkFeatures(section=="acknowledgements")

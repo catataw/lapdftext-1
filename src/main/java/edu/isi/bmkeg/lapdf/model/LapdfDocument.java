@@ -456,7 +456,8 @@ public class LapdfDocument implements Serializable {
 		
 		int nPages = this.getTotalNumberOfPages();
 		int id = 0;
-		for( int i=0; i<nPages; i++ ) {
+		/*for( int i=0; i<nPages; i++ ) {*/
+		for( int i=27; i<28; i++ ) {
 			PageBlock page = this.getPage(i+1);
 			
 			LapdftextXMLPage xmlPage = new LapdftextXMLPage();
