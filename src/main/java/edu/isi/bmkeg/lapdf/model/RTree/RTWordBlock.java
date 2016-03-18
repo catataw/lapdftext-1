@@ -40,7 +40,8 @@ public class RTWordBlock extends RTSpatialEntity implements WordBlock {
 		
 		if( word != null ) {
 			try {
-				this.word = UnicodeFormatter.fixEncoding(word);						
+				//this.word = UnicodeFormatter.fixEncoding(word);
+				this.word = word;
 			} catch(Exception e) {
 				logger.debug("Error in parsing " + word);
 				this.word = "";

@@ -457,7 +457,7 @@ public class LapdfDocument implements Serializable {
 		int nPages = this.getTotalNumberOfPages();
 		int id = 0;
 		/*for( int i=0; i<nPages; i++ ) {*/
-		for( int i=27; i<28; i++ ) {
+		for( int i=233; i<234; i++ ) {
 			PageBlock page = this.getPage(i+1);
 			
 			LapdftextXMLPage xmlPage = new LapdftextXMLPage();
@@ -554,5 +554,113 @@ public class LapdfDocument implements Serializable {
 		return xmlDoc;
 	
 	}	
+	
+	// This method is just for testing only
+	public LapdftextXMLDocument convertToLapdftextXmlFormat(int start, int end) throws Exception {
+		
+		LapdftextXMLDocument xmlDoc = new LapdftextXMLDocument();
+		
+		Map<String, Integer> fontStyles = new HashMap<String, Integer>();
+		int fsCount = 0;
+		
+		int id = 0;
+		for( int i = (start - 1); i<end; i++ ) {
+			PageBlock page = this.getPage(i+1);
+			
+			LapdftextXMLPage xmlPage = new LapdftextXMLPage();
+			xmlDoc.getPages().add(xmlPage);
+			
+			xmlPage.setId( id++ );
+			xmlPage.setH( page.getPageBoxHeight() );
+			xmlPage.setW( page.getPageBoxWidth() );
+
+			// int width = parent.getMargin()[2] - parent.getMargin()[0];
+			// int height = parent.getMargin()[3] - parent.getMargin()[1];
+			int[] m = page.getMargin();
+			LapdftextXMLRectangle r = new LapdftextXMLRectangle(id++, m[2]-m[0], m[3]-m[1], m[0], m[1]);
+			xmlPage.setMargin( r );
+			
+			xmlPage.setMostPopWordHeight( 
+					page.getMostPopularWordHeightPage() 
+					);
+			xmlPage.setPageNumber( i+1 );
+			
+			Iterator<ChunkBlock> cIt = page.getAllChunkBlocks(
+					SpatialOrdering.COLUMN_AWARE_MIXED_MODE
+					).iterator();
+			
+			while( cIt.hasNext() ) {
+				ChunkBlock chunk = cIt.next();
+				
+				LapdftextXMLChunk xmlChunk = new LapdftextXMLChunk();
+				xmlPage.getChunks().add(xmlChunk);
+				
+				if( chunk.getType() != null )
+					xmlChunk.setType( chunk.getType() );
+				
+				xmlChunk.setFont( chunk.getMostPopularWordFont() );
+				xmlChunk.setFont( chunk.getMostPopularWordFont() );
+				xmlChunk.setFontSize( chunk.getMostPopularWordHeight() );
+			
+				xmlChunk.setId( id++ );
+				xmlChunk.setW( chunk.getX2() - chunk.getX1() );
+				xmlChunk.setH( chunk.getY2() - chunk.getY1() );
+				xmlChunk.setX( chunk.getX1() );
+				xmlChunk.setY( chunk.getY1() );
+				xmlChunk.setI( chunk.getOrder() );
+				
+				List<SpatialEntity> wbList = page.containsByType(chunk,
+						SpatialOrdering.ORIGINAL_MODE, 
+						WordBlock.class);
+				if( wbList != null ) {					
+					Iterator<SpatialEntity> wbIt = wbList.iterator();
+					while( wbIt.hasNext() ) {
+						WordBlock word = (WordBlock) wbIt.next();
+	
+						LapdftextXMLWord xmlWord = new LapdftextXMLWord();
+						xmlChunk.getWords().add( xmlWord ); 
+						
+						if( word.getWord() != null ) {
+							xmlWord.setT(word.getWord());							
+						} else {
+							continue;
+						}
+						
+						xmlWord.setId( id++ );
+						xmlWord.setW( word.getX2() - word.getX1() );
+						xmlWord.setH( word.getY2() - word.getY1() );
+						xmlWord.setX( word.getX1() );
+						xmlWord.setY( word.getY1() );
+						xmlWord.setI( word.getOrder() );
+						
+						if( !fontStyles.containsKey( word.getFont() ) ) {
+							fontStyles.put(word.getFont(), fsCount++);
+						} 
+						xmlWord.setfId(fontStyles.get( word.getFont() ) );
+											
+						if( !fontStyles.containsKey( word.getFontStyle() ) ) {
+							fontStyles.put(word.getFontStyle(), fsCount++);
+						} 
+						xmlWord.setsId(fontStyles.get( word.getFontStyle() ) );
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+		for( String fsStr : fontStyles.keySet() ) {
+			LapdftextXMLFontStyle fsXml = new LapdftextXMLFontStyle();
+			fsXml.setFontStyle(fsStr);
+			fsXml.setId(fontStyles.get(fsStr));
+			xmlDoc.getFontStyles().add(fsXml);
+		}
+		
+		return xmlDoc;
+	
+	}	
+	
 	
 }

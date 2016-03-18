@@ -245,7 +245,7 @@ public class RTChunkBlock extends RTSpatialEntity implements ChunkBlock {
 		StringBuilder builder = new StringBuilder();
 		for (SpatialEntity entity : wordBlockList) {
 			builder.append( ((WordBlock) entity).getWord() );
-
+			
 			if( ((WordBlock) entity).getWord() == null )
 				continue;
 			

@@ -34,6 +34,10 @@ public class ChunkFeatures {
 		String s = chunk.getMostPopularWordFont() 
 				+ ";" + chunk.getMostPopularWordStyle();
 		
+		System.out.println(chunk.readChunkText());
+		System.out.println(ds + " - " + s);
+		System.out.println();
+		
 		if( s.equals(ds) )
 			return true;
 		
@@ -149,6 +153,7 @@ public class ChunkFeatures {
 	 * @return
 	 */
 	public boolean isAllCapitals() {
+		
 		String chunkText = chunk.readChunkText();
 		Matcher matcher = patternLowerCase.matcher(chunkText);
 		if (matcher.find()) {

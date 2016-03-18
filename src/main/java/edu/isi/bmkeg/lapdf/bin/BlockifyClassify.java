@@ -22,10 +22,13 @@ public class BlockifyClassify {
 
 	public static void main(String args[]) throws Exception {
 
+		int start = 234;
+		int end = 234;
+		
 		//LapdfEngine engine = new LapdfEngine();
 		LapdfEngineEx engine = new LapdfEngineEx();
-		engine.setStartPage(28);
-		engine.setEndPage(28);
+		engine.setStartPage(start);
+		engine.setEndPage(end);
 		
 		if (args.length < 1) {
 			System.err.println(USAGE);
@@ -122,9 +125,12 @@ public class BlockifyClassify {
 			File outXmlFile = new File(outPath);
 
 			LapdfDocument lapdf = engine.blockifyFile(inputFileOrDir);
+			
 			engine.classifyDocument(lapdf, ruleFile);
+			
 			LapdftextXMLDocument xmlDoc = lapdf
-					.convertToLapdftextXmlFormat();
+					.convertToLapdftextXmlFormat(start, end);
+			
 			XmlBindingTools.saveAsXml(xmlDoc, outXmlFile);
 			
 		}

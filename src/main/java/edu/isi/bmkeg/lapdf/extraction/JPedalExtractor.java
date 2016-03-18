@@ -208,7 +208,6 @@ public class JPedalExtractor implements Extractor {
 				style = getFontData(currentWord, "style");
 			
 			currentWord = Strip.convertToText(currentWord, true);
-			
 			int wx1 = (int) Math.floor(Float.parseFloat((wordIterator.next() + "")));
 			int wy1 = (int) Math.floor(Float.parseFloat((wordIterator.next() + "")));
 			int wx2 = (int) Math.floor(Float.parseFloat((wordIterator.next() + "")));
