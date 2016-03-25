@@ -16,16 +16,16 @@ import edu.isi.bmkeg.utils.xml.XmlBindingTools;
 public class BlockifyClassifyDemo {
 
 	// Start page of pdf need to be extracted
-	public static final int START = 38;
+	public static final int START = 94;
 	
 	// End page of pdf need to be extracted
-	public static final int END = 41;
+	public static final int END = 99;
 	
 	// Pdf file input
-	public static final String INPUT_FILE = "/Users/phat/Desktop/Article-Pdf/1509_The_Peak_HK.pdf";
+	public static final String INPUT_FILE = "/Users/phat/Desktop/Article-Pdf/1603_AS_HK.pdf";
 	
 	// Directory output
-	public static final String OUTPUT_DIR = "/Users/phat/Desktop/Article-Pdf/result/demo1";
+	public static final String OUTPUT_DIR = "/Users/phat/Desktop/Article-Pdf/result/demo2";
 	
 	// Drools rules file
 	public static final String RULE_FILE = "/Users/phat/Development/source-code/pdf-parser/src/main/resources/rules/sph_article_rules.drl";

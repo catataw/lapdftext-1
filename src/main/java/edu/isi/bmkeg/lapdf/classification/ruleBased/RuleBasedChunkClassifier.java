@@ -117,8 +117,6 @@ public class RuleBasedChunkClassifier implements Classifier<ChunkBlock> {
 		
 		this.modelFactory = modelFactory;
 		
-		
-	
 	}
 
 	@Override
@@ -127,6 +125,7 @@ public class RuleBasedChunkClassifier implements Classifier<ChunkBlock> {
 		this.kSession = kbase.newStatelessKnowledgeSession();
 		for (ChunkBlock chunk : blockList) {
 			kSession.setGlobal("chunk", chunk);
+			kSession.setGlobal("logger", logger);
 			kSession.execute(new ChunkFeatures(chunk, modelFactory));
 		}
 		this.kSession = null;

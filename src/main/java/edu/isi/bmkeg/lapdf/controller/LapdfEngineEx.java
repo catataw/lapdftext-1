@@ -3,6 +3,7 @@ package edu.isi.bmkeg.lapdf.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,7 @@ import edu.isi.bmkeg.lapdf.model.LapdfDocument;
 import edu.isi.bmkeg.lapdf.model.PageBlock;
 import edu.isi.bmkeg.lapdf.model.RTree.RTModelFactory;
 import edu.isi.bmkeg.lapdf.model.ordering.SpatialOrdering;
-import edu.isi.bmkeg.utils.Converters;
+import edu.isi.bmkeg.lapdf.utils.Constant;
 
 /**
  * <p>The extension class is to set startPage and endPage to classify the pdf file
@@ -28,10 +29,6 @@ import edu.isi.bmkeg.utils.Converters;
 public class LapdfEngineEx extends LapdfEngine {
 
 	private Logger LOG = LoggerFactory.getLogger(LapdfEngineEx.class);
-	
-	private static final String TITLE_RULE_FILE = "rules/sph_article_title_rules.drl";
-	
-	private static final String HIGHLIGHT_RULE_FILE = "rules/sph_article_highlight_rules.drl";
 	
 	private int startPage = 1;
 	
@@ -54,23 +51,23 @@ public class LapdfEngineEx extends LapdfEngine {
 					IOException {
 		
 		
-		//RuleBasedChunkClassifier classfier = new RuleBasedChunkClassifier(ruleFile.getPath(), new RTModelFactory());
-		RuleBasedChunkClassifier classfier = null;
+		RuleBasedChunkClassifier classfier = new RuleBasedChunkClassifier(ruleFile.getPath(), new RTModelFactory());
 		int max = (endPage == Integer.MAX_VALUE ? document.getTotalNumberOfPages() : endPage);
 		
-		File titleRuleFile = Converters.extractFileFromJarClasspath(".", TITLE_RULE_FILE);
-		if(titleRuleFile == null) {
+		for (int i = startPage; i <= max; i++) {
 			
-			LOG.error("Rule file is not existed! - {}", TITLE_RULE_FILE);
-			throw new RuntimeException("Pdf file is not existed! - " + TITLE_RULE_FILE);
+			PageBlock page = document.getPage(i);
+			List<ChunkBlock> chunkList = page.getAllChunkBlocks(SpatialOrdering.MIXED_MODE);
+			
+			classfier.classify(chunkList);
+
 		}
+	}
+
+	public void classifyDocument(LapdfDocument document, Map<String, File> ruleFileMap) throws ClassificationException, IOException {
 		
-		File hightlightRuleFile = Converters.extractFileFromJarClasspath(".", HIGHLIGHT_RULE_FILE);
-		if(hightlightRuleFile == null) {
-			
-			LOG.error("Rule file is not existed! - {}", HIGHLIGHT_RULE_FILE);
-			throw new RuntimeException("Pdf file is not existed! - " + HIGHLIGHT_RULE_FILE);
-		}
+		RuleBasedChunkClassifier classfier = null;
+		int max = (endPage == Integer.MAX_VALUE ? document.getTotalNumberOfPages() : endPage);
 		
 		for (int i = startPage; i <= max; i++) {
 			
@@ -78,21 +75,25 @@ public class LapdfEngineEx extends LapdfEngine {
 			List<ChunkBlock> chunkList = page.getAllChunkBlocks(SpatialOrdering.MIXED_MODE);
 			
 			if(!isChunkBlockType(document, ChunkBlock.TYPE_TITLE)) {
-				classfier = new RuleBasedChunkClassifier(titleRuleFile.getPath(), new RTModelFactory());
+				classfier = new RuleBasedChunkClassifier(ruleFileMap.get(Constant.RuleFileKey.ARTICLE_TITLE_RULE).getPath(), 
+						new RTModelFactory());
 				classfier.classify(chunkList);
 			}
 			
 			if(!isChunkBlockType(document, ChunkBlock.TYPE_HIGHLIGHT)) {
-				classfier = new RuleBasedChunkClassifier(hightlightRuleFile.getPath(), new RTModelFactory());
+				classfier = new RuleBasedChunkClassifier(ruleFileMap.get(Constant.RuleFileKey.ARTICLE_HIGHLIGHT_RULE).getPath(), 
+						new RTModelFactory());
 				classfier.classify(chunkList);
 			}
 			
-			classfier = new RuleBasedChunkClassifier(ruleFile.getPath(), new RTModelFactory());
+			classfier = new RuleBasedChunkClassifier(ruleFileMap.get(Constant.RuleFileKey.ARTICLE_BODY_RULE).getPath(), 
+					new RTModelFactory());
 			classfier.classify(chunkList);
 
 		}
 	}
-
+	
+	
 	public int getStartPage() {
 		return startPage;
 	}

@@ -34,9 +34,9 @@ public class ChunkFeatures {
 		String s = chunk.getMostPopularWordFont() 
 				+ ";" + chunk.getMostPopularWordStyle();
 		
-		System.out.println(chunk.readChunkText());
+		/*System.out.println(chunk.readChunkText());
 		System.out.println(ds + " - " + s);
-		System.out.println();
+		System.out.println();*/
 		
 		if( s.equals(ds) )
 			return true;
@@ -341,10 +341,10 @@ public class ChunkFeatures {
 	 * returns the classification assigned to previous chunk block
 	 * @return
 	 */
-	public String getlastClassification() {
+	public String getLastClassification() {
 
 		ChunkBlock lastBlock = chunk.readLastChunkBlock();
-
+		System.out.println("lastBlock == null: " + (lastBlock == null));
 		return (lastBlock == null) ? null : lastBlock.getType();
 
 	}
