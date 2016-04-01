@@ -12,7 +12,7 @@ import edu.isi.bmkeg.lapdf.model.PageBlock;
 import edu.isi.bmkeg.lapdf.model.WordBlock;
 import edu.isi.bmkeg.lapdf.model.ordering.SpatialOrdering;
 import edu.isi.bmkeg.lapdf.model.spatial.SpatialEntity;
-import edu.isi.bmkeg.utils.UnicodeFormatter;
+import edu.isi.bmkeg.lapdf.utils.UnicodeFormatter;
 
 public class RTWordBlock extends RTSpatialEntity implements WordBlock {
 
@@ -40,8 +40,7 @@ public class RTWordBlock extends RTSpatialEntity implements WordBlock {
 		
 		if( word != null ) {
 			try {
-				//this.word = UnicodeFormatter.fixEncoding(word);
-				this.word = word;
+				this.word = UnicodeFormatter.fixEncoding(word);
 			} catch(Exception e) {
 				logger.debug("Error in parsing " + word);
 				this.word = "";

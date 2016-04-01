@@ -67,6 +67,8 @@ public class LapdfEngineEx extends LapdfEngine {
 	public void classifyDocument(LapdfDocument document, Map<String, File> ruleFileMap) throws ClassificationException, IOException {
 		
 		RuleBasedChunkClassifier classfier = null;
+		RuleBasedChunkClassifier classfierBody = new RuleBasedChunkClassifier(ruleFileMap.get(Constant.RuleFileKey.ARTICLE_BODY_RULE).getPath(), 
+				new RTModelFactory());
 		int max = (endPage == Integer.MAX_VALUE ? document.getTotalNumberOfPages() : endPage);
 		
 		for (int i = startPage; i <= max; i++) {
@@ -74,21 +76,19 @@ public class LapdfEngineEx extends LapdfEngine {
 			PageBlock page = document.getPage(i);
 			List<ChunkBlock> chunkList = page.getAllChunkBlocks(SpatialOrdering.MIXED_MODE);
 			
-			if(!isChunkBlockType(document, ChunkBlock.TYPE_TITLE)) {
+			if(!isDocumentContainChunkBlockType(document, ChunkBlock.TYPE_TITLE)) {
 				classfier = new RuleBasedChunkClassifier(ruleFileMap.get(Constant.RuleFileKey.ARTICLE_TITLE_RULE).getPath(), 
 						new RTModelFactory());
 				classfier.classify(chunkList);
 			}
 			
-			if(!isChunkBlockType(document, ChunkBlock.TYPE_HIGHLIGHT)) {
+			if(!isDocumentContainChunkBlockType(document, ChunkBlock.TYPE_HIGHLIGHT)) {
 				classfier = new RuleBasedChunkClassifier(ruleFileMap.get(Constant.RuleFileKey.ARTICLE_HIGHLIGHT_RULE).getPath(), 
 						new RTModelFactory());
 				classfier.classify(chunkList);
 			}
 			
-			classfier = new RuleBasedChunkClassifier(ruleFileMap.get(Constant.RuleFileKey.ARTICLE_BODY_RULE).getPath(), 
-					new RTModelFactory());
-			classfier.classify(chunkList);
+			classfierBody.classify(chunkList);
 
 		}
 	}
@@ -121,7 +121,7 @@ public class LapdfEngineEx extends LapdfEngine {
 	}
 	
 	
-	public boolean isChunkBlockType(LapdfDocument document, String chunkBlockType) {
+	public boolean isDocumentContainChunkBlockType(LapdfDocument document, String chunkBlockType) {
 		for (int i = startPage; i <= endPage; i++) {
 			PageBlock page = document.getPage(i);
 			List<ChunkBlock> chunkList = page.getAllChunkBlocks(SpatialOrdering.MIXED_MODE);

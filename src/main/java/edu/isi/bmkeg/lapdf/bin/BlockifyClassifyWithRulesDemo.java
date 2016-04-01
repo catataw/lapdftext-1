@@ -1,25 +1,23 @@
-	package edu.isi.bmkeg.lapdf.bin;
+package edu.isi.bmkeg.lapdf.bin;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import edu.isi.bmkeg.lapdf.controller.LapdfEngineEx;
 import edu.isi.bmkeg.lapdf.model.LapdfDocument;
+import edu.isi.bmkeg.lapdf.utils.Constant;
 import edu.isi.bmkeg.lapdf.xml.model.LapdftextXMLDocument;
 import edu.isi.bmkeg.utils.xml.XmlBindingTools;
 
-/**
- * This class for testing Drools rule to detect parts of an article
- * @author Phat Nguyen
- *
- */
-
-public class BlockifyClassifyDemo {
+public class BlockifyClassifyWithRulesDemo {
 
 	// Start page of pdf need to be extracted
-	public static final int START = 70;
+	public static final int START = 69;
 	
 	// End page of pdf need to be extracted
-	public static final int END = 70;
+	public static final int END = 69;
 	
 	public static final String ARTICLE_FILE = "sph_article_title_rules.drl";
 	
@@ -36,15 +34,13 @@ public class BlockifyClassifyDemo {
 	public static final String OUTPUT_DIR = "/Users/phat/Desktop/Article-Pdf/result/demo3";
 	
 	// Drools rules file
-	public static final String RULE_FILE = "/Users/phat/Development/source-code/pdf-parser/src/main/resources/rules/" + BODY_FILE;
+	public static final String RULE_FILE_PATH = "/Users/phat/Development/source-code/pdf-parser/src/main/resources/rules/";
 	
 	public static void main(String[] args) throws Exception {
 		
 		File inputFileOrDir = new File(INPUT_FILE);
 		
 		File outDir = new File(OUTPUT_DIR);
-		
-		File ruleFile = new File(RULE_FILE);
 		
 		// Init engine
 		LapdfEngineEx engine = new LapdfEngineEx();
@@ -60,10 +56,32 @@ public class BlockifyClassifyDemo {
 		
 		LapdfDocument lapdf = engine.blockifyFile(inputFileOrDir);
 		
-		engine.classifyDocument(lapdf, ruleFile);
+		engine.classifyDocument(lapdf, initRuleFiles());
 		
 		LapdftextXMLDocument xmlDoc = lapdf.convertToLapdftextXmlFormat(START, END);
 		
 		XmlBindingTools.saveAsXml(xmlDoc, outXmlFile);
+	}
+
+	public static Map<String, File> initRuleFiles() throws IOException {
+		
+		Map<String, File> ruleFileMap = new HashMap<>();
+		
+		// Title rule file
+		File ruleTitleFile = new File(RULE_FILE_PATH + ARTICLE_FILE);
+		
+		
+		
+		// Highlight rule file
+		File ruleHighlightFile = new File(RULE_FILE_PATH + HIGHLIGHT_FILE);
+		
+		// Body rule file
+		File ruleBodyFile = new File(RULE_FILE_PATH + HIGHLIGHT_FILE);
+		
+		ruleFileMap.put(Constant.RuleFileKey.ARTICLE_TITLE_RULE, ruleTitleFile);
+		ruleFileMap.put(Constant.RuleFileKey.ARTICLE_HIGHLIGHT_RULE, ruleHighlightFile);
+		ruleFileMap.put(Constant.RuleFileKey.ARTICLE_BODY_RULE, ruleBodyFile);
+		
+		return ruleFileMap;
 	}
 }

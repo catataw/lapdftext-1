@@ -782,7 +782,7 @@ public class RuleBasedParser implements Parser {
 				chunkBlock = modelFactory
 						.createChunkBlock(wordBlock.getX1(), wordBlock.getY1(),
 								wordBlock.getX2(), wordBlock.getY2(), wordBlock.getOrder());
-
+				
 			} else {
 			
 				SpatialEntity spatialEntity = chunkBlock.union(wordBlock);

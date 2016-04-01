@@ -34,9 +34,10 @@ public class ChunkFeatures {
 		String s = chunk.getMostPopularWordFont() 
 				+ ";" + chunk.getMostPopularWordStyle();
 		
-		/*System.out.println(chunk.readChunkText());
+		System.out.println(chunk.readChunkText());
+		System.out.println("Order: " + chunk.getOrder());
 		System.out.println(ds + " - " + s);
-		System.out.println();*/
+		System.out.println();
 		
 		if( s.equals(ds) )
 			return true;
