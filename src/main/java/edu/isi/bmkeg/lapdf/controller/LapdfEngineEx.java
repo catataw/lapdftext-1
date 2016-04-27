@@ -67,8 +67,8 @@ public class LapdfEngineEx extends LapdfEngine {
 	public void classifyDocument(LapdfDocument document, Map<String, File> ruleFileMap) throws ClassificationException, IOException {
 		
 		RuleBasedChunkClassifier classfier = null;
-		RuleBasedChunkClassifier classfierBody = new RuleBasedChunkClassifier(ruleFileMap.get(Constant.RuleFileKey.ARTICLE_BODY_RULE).getPath(), 
-				new RTModelFactory());
+		//RuleBasedChunkClassifier classfierBody = new RuleBasedChunkClassifier(ruleFileMap.get(Constant.RuleFileKey.ARTICLE_BODY_RULE).getPath(), 
+				//new RTModelFactory());
 		int max = (endPage == Integer.MAX_VALUE ? document.getTotalNumberOfPages() : endPage);
 		
 		for (int i = startPage; i <= max; i++) {
@@ -88,7 +88,7 @@ public class LapdfEngineEx extends LapdfEngine {
 				classfier.classify(chunkList);
 			}
 			
-			classfierBody.classify(chunkList);
+			// classfierBody.classify(chunkList);
 
 		}
 	}
